@@ -2,6 +2,7 @@ import sys
 import argparse
 import random
 from pyrosetta import *
+import pyrosetta
 
 init(extra_options="-ignore_unrecognized_res")
 
@@ -24,6 +25,24 @@ print(f"Initial score: {initial_score:.2f}")
 # Monte Carlo setup
 kT = 1.0
 mc = MonteCarlo(mypose, scorefxn, kT)
+
+
+try:
+    from pyrosetta.rosetta.protocols.moves import AddPyMOLObserver
+    the_observer = AddPyMOLObserver(mypose)  
+    the_observer.pymol().apply(mypose)
+    print("PyMOL observer attached successfully")
+except:
+    print("PyMOL not available - continuing without visualization")
+
+
+
+# Create MoveMap for minimization later
+movemap = pyrosetta.rosetta.core.kinematics.MoveMap()
+movemap.set_bb(True)
+movemap.set_chi(True)
+print("MoveMap created for backbone and sidechain movement")
+
 
 # Monte Carlo Loop 
 n_iterations = 50
