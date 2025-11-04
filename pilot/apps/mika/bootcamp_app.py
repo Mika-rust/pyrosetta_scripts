@@ -88,7 +88,7 @@ for i in range(n_iterations):
         accepted_moves += 1  
     
     # Print statistics every 100 iterations
-    if (i + 1) % 10 == 0:
+    if (i + 1) % 2 == 0:
         acceptance_rate = accepted_moves / (i + 1)
         average_score = total_energy_sum / (i + 1)
         print(f"Iteration {i + 1}: Acceptance Rate = {acceptance_rate:.3f}, Average Score = {average_score:.2f}")
